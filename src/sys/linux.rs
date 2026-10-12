@@ -28,10 +28,8 @@ fn children() -> Vec<i32> {
 		let Some(rest) = stat.rfind(')').map(|i| &stat[i + 1..]) else { continue };
 		let mut it = rest.split_whitespace();
 		let (state, ppid) = (it.next(), it.next().and_then(|s| s.parse::<i32>().ok()));
-		if let (Some(st), Some(pp)) = (state, ppid) {
-			if st != "Z" {
-				parent_of.push((pid, pp));
-			}
+		if let (Some(st), Some(pp)) = (state, ppid) && st != "Z" {
+			parent_of.push((pid, pp));
 		}
 	}
 	let mut found = Vec::new();
